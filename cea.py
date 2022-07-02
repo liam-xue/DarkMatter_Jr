@@ -85,9 +85,9 @@ class CEA():
         self.short_output      = 1
         self.show_transport    = 1
 
-        self.cea_imperial = CEA_Obj_imperial.CEA_Obj(oxName         = self.oxName,
-                                                    fuelName        = self.fuelName)
-        self.cea          = cea_obj_SI.CEA_Obj(oxName               = self.oxName,
+        # self.cea = cea_obj_SI.CEA_Obj(oxName         = self.oxName,
+        #                                             fuelName        = self.fuelName)
+        self.cea    = cea_obj_SI.CEA_Obj(oxName               = self.oxName,
                                                fuelName             = self.fuelName,
                                                fac_CR               = self.fac_CR,
                                                useFastLookup        = self.useFastLookup,
@@ -125,22 +125,21 @@ class CEA():
         # self.Entropies           = self.cea.get_Entropies          ( Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen, frozenAtThroat=self.frozenAtThroat)
         self.HeatCapacities      = self.cea.get_HeatCapacities     ( Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen, frozenAtThroat=self.frozenAtThroat)
 
-        self.Chamber_MolWt_gamma = self.cea.get_Chamber_MolWt_gamma(Pc=self.Pcc, MR=self.OF, eps=self.area_ratio                                                         )
-        self.Throat_MolWt_gamma  = self.cea.get_Throat_MolWt_gamma (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen                                     )
-        self.exit_MolWt_gamma    = self.cea.get_exit_MolWt_gamma   (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio )
+        # self.Chamber_MolWt_gamma = self.cea.get_Chamber_MolWt_gamma(Pc=self.Pcc, MR=self.OF, eps=self.area_ratio                                                         )
+        # self.Throat_MolWt_gamma  = self.cea.get_Throat_MolWt_gamma (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen                                     )
+        # self.exit_MolWt_gamma    = self.cea.get_exit_MolWt_gamma   (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio )
         # self.exit_MolWt_gamma    = self.cea.get_exit_MolWt_gamma   (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen, frozenAtThroat=self.frozenAtThroat )
 
-        self.Chamber_Transport   = self.cea.get_Chamber_Transport  (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen                                     )
-        self.Throat_Transport    = self.cea.get_Throat_Transport   (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen                                     )
-        self.Exit_Transport      = self.cea.get_Exit_Transport     (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen                                     )
+        # self.Chamber_Transport   = self.cea.get_Chamber_Transport  (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen                                     )
+        # self.Throat_Transport    = self.cea.get_Throat_Transport   (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen                                     )
+        # self.Exit_Transport      = self.cea.get_Exit_Transport     (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen                                     )
 
-        self.estimate_Ambient_Isp = self.cea.estimate_Ambient_Isp (Pc =self.Pcc, MR =self.OF, eps =self.area_ratio, Pamb   =self.Pamb, frozen           =self.frozen, frozenAtThroat =self.frozenAtThroat)
+        # self.estimate_Ambient_Isp = self.cea.estimate_Ambient_Isp (Pc =self.Pcc, MR =self.OF, eps =self.area_ratio, Pamb   =self.Pamb, frozen           =self.frozen, frozenAtThroat =self.frozenAtThroat)
         self.Isp                  = self.cea.get_Isp              (Pc =self.Pcc, MR =self.OF, eps =self.area_ratio, frozen =self.frozen, frozenAtThroat =self.frozenAtThroat                             )
-        self.Cstar                = self.cea.get_Cstar            (Pc =self.Pcc, MR =self.OF                                                                                                             )
+        # self.Cstar                = self.cea.get_Cstar            (Pc =self.Pcc, MR =self.OF                                                                                                             )
 
-        # self.Chamber_MachNumber  = self.cea.get_Chamber_MachNumber (Pc=self.Pcc, MR=self.OF, fac_CR=self.fac_CR                                                           )
         self.MachNumber          = self.cea.get_MachNumber         (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen, frozenAtThroat=self.frozenAtThroat  )
-        self.SonicVelocities     = self.cea.get_SonicVelocities    (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen, frozenAtThroat=self.frozenAtThroat  )
+        # self.SonicVelocities     = self.cea.get_SonicVelocities    (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen, frozenAtThroat=self.frozenAtThroat  )
 
         self.PcOvPe              = self.cea.get_PcOvPe             (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen, frozenAtThroat=self.frozenAtThroat  )
         # self.Pinj_over_Pcomb     = self.cea.get_Pinj_over_Pcomb    (Pc=self.Pcc, MR=self.OF, fac_CR=self.fac_CR                                                           )

@@ -1,0 +1,5 @@
+for bash, need #!/bin/bash need to be typed in wsl
+
+need 
+sudo chmod u+x run.sh
+./run.sh
