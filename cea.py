@@ -136,7 +136,7 @@ class CEA():
 
         # self.estimate_Ambient_Isp = self.cea.estimate_Ambient_Isp (Pc =self.Pcc, MR =self.OF, eps =self.area_ratio, Pamb   =self.Pamb, frozen           =self.frozen, frozenAtThroat =self.frozenAtThroat)
         self.Isp                  = self.cea.get_Isp              (Pc =self.Pcc, MR =self.OF, eps =self.area_ratio, frozen =self.frozen, frozenAtThroat =self.frozenAtThroat                             )
-        # self.Cstar                = self.cea.get_Cstar            (Pc =self.Pcc, MR =self.OF                                                                                                             )
+        self.Cstar                = self.cea.get_Cstar            (Pc =self.Pcc, MR =self.OF                                                                                                             )
 
         self.MachNumber          = self.cea.get_MachNumber         (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen, frozenAtThroat=self.frozenAtThroat  )
         # self.SonicVelocities     = self.cea.get_SonicVelocities    (Pc=self.Pcc, MR=self.OF, eps=self.area_ratio, frozen=self.frozen, frozenAtThroat=self.frozenAtThroat  )
