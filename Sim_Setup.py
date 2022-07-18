@@ -39,8 +39,9 @@ class Simulation():
             self.Isp = self.cea.Isp
             self.thrust = (self.ox_rate+self.fuel_rate)*9.81*self.Isp*self.efficiency
 
-            #Temp
-            self.thrust = 2214.644547
+            ####Temp
+            self.thrust = 2000
+###
 
             self.engine_file = '''<engine-database>
  <engine-list>

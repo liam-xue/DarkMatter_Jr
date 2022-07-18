@@ -12,6 +12,8 @@ def effect_of_OF(OF):
     sim = Simulation(ox_mass, fuel_mass, burn_time=8.4, Pcc=350)
     apogee = max(sim.flight_run.kinematics_dynamics.TYPE_ALTITUDE)
 
+    print(sim.flight_run.kinematics_dynamics.TYPE_ALTITUDE)
+
     f = open(str(os.path.join('Result', "OF.txt")), "a")
     f.write("\n" + format(OF,'.4f'))
     f.close()
