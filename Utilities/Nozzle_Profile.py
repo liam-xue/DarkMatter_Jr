@@ -6,6 +6,8 @@ from scipy import interpolate
 import matplotlib.pyplot as plt
 import numpy as np
 
+printable = False
+
 #Defining the trig functions in degrees 
 
 def cosd(x):
@@ -22,8 +24,6 @@ def asind(x):
 
 def tand(x):
     return math.tan(math.radians(x)) 
-
-print("Input radius of throat [mm], radius of inlet [mm], and inlet angle [degrees] using parameter_check_1(R_t, R_in, inlet_angle)")
 
 
 def parameter_check_1(R_t, R_in, inlet_angle):
@@ -46,9 +46,10 @@ def parameter_check_1(R_t, R_in, inlet_angle):
         
         a = abs((1/m)*(R_in -(1.5*R_t*sind(inlet_angle - 180) + 2.5*R_t)) + 1.5*R_t*cosd(inlet_angle - 180))
         
-        print("With this geometery, the length of the converging section of the nozzle (before the throat) will be ", a, " [mm] long. If this value is too large, try reducing the inlet angle, or increase the inlet radius")
-        print("****************************************************************************************************************************")
-        print("Please call generate_nozzle and input area ratio, length fraction, gamma, combustion chamber temperature [K], combustion chamber pressure [kPa], the number of converging section (before the throat) data points, the number of diverging section (after the throat) data points")    
+        if printable:
+            print("With this geometery, the length of the converging section of the nozzle (before the throat) will be ", a, " [mm] long. If this value is too large, try reducing the inlet angle, or increase the inlet radius")
+            print("****************************************************************************************************************************")
+            print("Please call generate_nozzle and input area ratio, length fraction, gamma, combustion chamber temperature [K], combustion chamber pressure [kPa], the number of converging section (before the throat) data points, the number of diverging section (after the throat) data points")    
         return  
 
         
@@ -286,7 +287,8 @@ def generate_nozzle(area_ratio,ln_frac, gamma, cc_t, cc_p, con_points, div_point
     plt.gca().set_aspect('equal', adjustable = 'box')
     plt.draw()
     
-    plt.show()
+    if printable:
+        plt.show()
     
     f2 = plt.figure()
     
@@ -337,14 +339,23 @@ def generate_nozzle(area_ratio,ln_frac, gamma, cc_t, cc_p, con_points, div_point
          ["Converging Spacing________", con_space, ''],
          ["Diverging Spacing_________", div_space, '']]
          
-    print ("{:<8} {:<15} {:<10}".format('Parameter', 'Value', 'Location (if applicable)'))
+    if printable:
+        print ("{:<8} {:<15} {:<10}".format('Parameter', 'Value', 'Location (if applicable)'))
     
-    for v in d:
-        one, two, three = v
-        print ("{:<8} {:<15} {:<10}".format( one, two, three))    
+        for v in d:
+            one, two, three = v
+            print ("{:<8} {:<15} {:<10}".format( one, two, three))    
     
-    return print("The output has been written to Nozzle_Spline.txt in the form of NORMALISED X - Y - Z [mm]")
+        print("The output has been written to Nozzle_Spline.txt in the form of NORMALISED X - Y - Z [mm]")
+    
+    return (x_list_mod, y_list)
+
+def get_nozzle(R_t,R_in,theta,area_ratio,ln_frac,gamma,cc_t,cc_p,con_points,div_points):
+    parameter_check_1(R_t,R_in,theta)
+    generate_nozzle(area_ratio,ln_frac,gamma,cc_t,cc_p,con_points,div_points)
 
 if __name__ == "__main__":
+    printable = True
+    print("Input radius of throat [mm], radius of inlet [mm], and inlet angle [degrees] using parameter_check_1(R_t, R_in, inlet_angle)")
     parameter_check_1(16.75/2,0.09*1000/2,40) 
-    generate_nozzle(4.2,1,1.4,3060,2758,100,100)
+    generate_nozzle(4.2,1,1.4,3060,2758,500,500)

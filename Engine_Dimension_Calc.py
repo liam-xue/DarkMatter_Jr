@@ -2,6 +2,8 @@ from cea import *
 import numpy
 from scipy.optimize import fsolve
 from CoolProp.CoolProp import PropsSI
+from Utilities.Nozzle_Profile import get_nozzle
+from Utilities.Mass_Flux import get_mass_flux
 
 class BC:
     HEADER = '\033[95m'
@@ -58,6 +60,8 @@ throat_diameter = numpy.sqrt(A/numpy.pi)
 print("throat diameter, d =", BC.GREEN, throat_diameter, "m", BC.END, "OR", throat_diameter*1000, "mm")
 print("exit diameter =", throat_diameter*1000*numpy.sqrt(area_ratio), "mm")
 
+get_nozzle(throat_diameter*1000/2,chamber_diameter*1000/2,40,area_ratio,1,cea.Throat_MolWt_gamma[1],cea.T_t,Pcc*6.89476,500,500)
+
 
 ## Chamber Sizing Calc
 A_x = A
@@ -98,10 +102,7 @@ print("Exit Mach number =", Ma_e)
 
 ## Injector Sizing Calc
 print("\nAssuming injector temperature T_inj =", T_inj, "K")
-kappa = numpy.sqrt((P_inj-Pcc)/(PropsSI('P', 'T', T_inj, 'Q', 0, 'N2O')/6894.76-Pcc))
-G_SPI = C_d*numpy.sqrt(2*PropsSI('D', 'T', T_inj, 'P', P_inj*6894.76, 'N2O')*(P_inj-Pcc)*6894.76)
-G_HEM = C_d*PropsSI('D', 'T', 1000, 'P', Pcc*6894.76, 'N2O')*numpy.sqrt(2*(PropsSI('H','P',P_inj*6894.76,'Q',0,'N2O')-PropsSI('H','P',Pcc*6894.76,'Q',0,'N2O')))
-G = (1-1/(1+kappa))*G_SPI + 1/(1+kappa)*G_HEM
+G = get_mass_flux(T_inj, P_inj*6894.76, Pcc*6894.76)
 print("Mass Flux G =", G, "kg/m2/s")
 A_inj_Ox = m_dot/(OF+1)*OF / G
 print("Ox injector area =", A_inj_Ox, "m2")
