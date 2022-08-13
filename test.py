@@ -35,25 +35,31 @@ def effect_of_Pcc(Pcc):
     f.close()
 
 
-def effect_of_burntime(burn_time,efficiency):
+def effect_of_burntime(burn_time,efficiency=90):
     burn_time = float(burn_time)
     efficiency = int(efficiency)
-    OF = 4.5
-    prop_mass = 9.333333
+    OF = 4
+    prop_mass = 9.25
     ox_mass = prop_mass/(OF+1)*OF
     fuel_mass = prop_mass/OF
 
-    sim = Simulation(ox_mass, fuel_mass, burn_time, Pcc=400, efficiency=efficiency/100.0)
+    sim = Simulation(ox_mass, fuel_mass, burn_time, 400, 4.5, efficiency=efficiency/100.0)
+    thrust = sim.thrust
     apogee = max(sim.flight_run.kinematics_dynamics.TYPE_ALTITUDE)
     mach = max(sim.flight_run.kinematics_dynamics.TYPE_MACH_NUMBER)
+
+    print(thrust, apogee, mach)
 
     #f = open(str(os.path.join('Result', "burn_time.txt")), "a")
     #f.write("\n" + format(burn_time,'.4f'))
     #f.close()
-    f = open(str(os.path.join('Result', "apogee"+str(efficiency)+".txt")), "a")
+    f = open(str(os.path.join('Result', "thrust.txt")), "a")
+    f.write("\n" + format(thrust,'.4f'))
+    f.close()
+    f = open(str(os.path.join('Result', "apogee.txt")), "a")
     f.write("\n" + format(apogee,'.4f'))
     f.close()
-    f = open(str(os.path.join('Result', "mach"+str(efficiency)+".txt")), "a")
+    f = open(str(os.path.join('Result', "mach.txt")), "a")
     f.write("\n" + format(mach,'.4f'))
     f.close()
 

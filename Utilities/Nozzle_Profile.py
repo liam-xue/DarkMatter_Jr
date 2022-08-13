@@ -5,6 +5,7 @@ from scipy.optimize import fsolve
 from scipy import interpolate
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 printable = False
 
@@ -64,8 +65,7 @@ def generate_nozzle(area_ratio,ln_frac, gamma, cc_t, cc_p, con_points, div_point
     inlet_angle = parameter_check_1.var3
     
     # READING IN E/ N FILES 
-    
-    f = open("N_Nozzle_Profile.txt")
+    f = open(os.path.join(os.path.dirname(__file__),"N_Nozzle_Profile.txt"))
     n_text = f.read()
     N_matrix = n_text.split("\n")
     
@@ -75,7 +75,7 @@ def generate_nozzle(area_ratio,ln_frac, gamma, cc_t, cc_p, con_points, div_point
         
         N_matrix[i] = [float(item) for item in N_matrix[i]]
             
-    f = open("E_Nozzle_Profile.txt")
+    f = open(os.path.join(os.path.dirname(__file__),"E_Nozzle_Profile.txt"))
     e_text = f.read()
     E_matrix = e_text.split("\n")
         
@@ -314,7 +314,7 @@ def generate_nozzle(area_ratio,ln_frac, gamma, cc_t, cc_p, con_points, div_point
     
     z_list = [0]*len(x_list)
     
-    f = open('Nozzle_Spline-Rt'+format(R_t, '.2f')+'-Rin'+format(R_in, '.2f')+'-theta'+format(inlet_angle, '.2f')+'-AR'+format(area_ratio, '.2f')+'-lf'+format(ln_frac, '.2f')+'-gamma'+format(gamma, '.2f')+'.txt', 'w')
+    f = open(os.path.join(os.path.dirname(__file__),'Nozzle_Spline-Rt'+format(R_t, '.2f')+'-Rin'+format(R_in, '.2f')+'-theta'+format(inlet_angle, '.2f')+'-AR'+format(area_ratio, '.2f')+'-lf'+format(ln_frac, '.2f')+'-gamma'+format(gamma, '.2f')+'.txt'), 'w')
     
     writer = csv.writer(f)
     aa = 0

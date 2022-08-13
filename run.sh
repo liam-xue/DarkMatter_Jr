@@ -1,11 +1,11 @@
 #!/bin/bash
 
-for eff in $(seq 50 10 100)
+for eff in $(seq 90 10 90)
 do
 	echo "eff = $eff"
-	for fp in $(seq 2 0.1 10)
+	for bt in $(seq 2 1 10)
 	do
-		echo "VAR = $fp"
-		python test.py effect_of_burntime $fp $eff
+		echo "burntime = $bt"
+		python test.py effect_of_burntime $bt $eff
 	done
 done

@@ -20,21 +20,22 @@ class BC:
 
 #### Inputs
 
-Pcc = 400                       # psia
+Pcc = 400                               # psia
 OF = 4
-prop_mass = 9.25                # kg
-burn_time = 6                   # s
-area_ratio = 4.2
-L_star = 1                      # m
-chamber_diameter = 0.09         # m
+prop_mass = 9.3                         # kg
+burn_time = 6                           # s
+area_ratio = 4.5
+L_star = 1                              # m
+chamber_diameter = 0.09                 # m
 
-T_inj = 270                     # K
-P_inj = 700                     # psia
+T_inj = 295                             # K
+P_inj = 700                             # psia
 C_d = 1
-Ox_hole_diameter = 1/64.0       # in
+Ox_hole_diameter = 2/64.0               # in
 L_over_d = 10
-injector_diameter = 0.03        # m
-fuel_velocity = 20              # m/s
+injector_diameter = 0.030               # m
+fuel_velocity = 20                      # m/s
+Ox_discharge_angle = numpy.deg2rad(90)  # deg
 
 
 ####
@@ -60,8 +61,8 @@ throat_diameter = numpy.sqrt(A/numpy.pi)
 print("throat diameter, d =", BC.GREEN, throat_diameter, "m", BC.END, "OR", throat_diameter*1000, "mm")
 print("exit diameter =", throat_diameter*1000*numpy.sqrt(area_ratio), "mm")
 
-get_nozzle(throat_diameter*1000/2,chamber_diameter*1000/2,40,area_ratio,1,cea.Throat_MolWt_gamma[1],cea.T_t,Pcc*6.89476,500,500)
-
+# get_nozzle(throat_diameter*1000/2,chamber_diameter*1000/2,40,area_ratio,1,cea.Throat_MolWt_gamma[1],cea.T_t,Pcc*6.89476,500,500)
+# print("Nozzle generated in Utilities")
 
 ## Chamber Sizing Calc
 A_x = A
@@ -107,8 +108,8 @@ print("Mass Flux G =", G, "kg/m2/s")
 A_inj_Ox = m_dot/(OF+1)*OF / G
 print("Ox injector area =", A_inj_Ox, "m2")
 print("Assuming hole size of d =", BC.GREEN, Ox_hole_diameter, "in", BC.END)
-print("each hole has A =", numpy.pi*(Ox_hole_diameter/39.37)**2, "m2")
-N = A_inj_Ox/(numpy.pi*(Ox_hole_diameter/39.37)**2)
+print("each hole has A =", numpy.pi/4*(Ox_hole_diameter/39.37)**2, "m2")
+N = A_inj_Ox/(numpy.pi/4*(Ox_hole_diameter/39.37)**2)
 print("We need", BC.GREEN, N, "holes"+BC.END+" with", Ox_hole_diameter/39.37*L_over_d*1000, "mm depth")
 print("coverage factor =", BC.BLUE, Ox_hole_diameter/39.37*N/numpy.pi/injector_diameter, BC.END)
 print("Assuming Fuel injection velocity of", fuel_velocity, "m/s")
@@ -120,6 +121,10 @@ fuel_inj_gap = (numpy.sqrt((numpy.pi/4*injector_diameter**2+A_inj_fuel)*4/numpy.
 print("the one-sided gap is", BC.GREEN, fuel_inj_gap*1000, "mm", BC.END)
 P_inj_fuel = ((m_dot/(OF+1)/A_inj_fuel/C_d)**2)/2/PropsSI('D', 'T', 295, 'P', Pcc*6894.76, 'C2H6O')/6894.76+Pcc
 print("with upstream pressure of", BC.BLUE, P_inj_fuel, "psia", BC.END)
+P_dot_x = PropsSI("D", "T", T_inj, "P", Pcc*6894.76, "C2H6O")*fuel_inj_gap*Ox_hole_diameter/39.37*fuel_velocity**2 + numpy.cos(Ox_discharge_angle)*numpy.pi/4*(Ox_hole_diameter/39.37)**2*(m_dot/(OF+1)*OF/PropsSI('D', 'T', T_inj, 'P', Pcc*6894.76, 'N2O')/A_inj_Ox)**2
+P_dot_y = numpy.sin(Ox_discharge_angle)*numpy.pi/4*(Ox_hole_diameter/39.37)**2*(m_dot/(OF+1)*OF/PropsSI('D', 'T', T_inj, 'P', Pcc*6894.76, 'N2O')/A_inj_Ox)**2
+theta = numpy.rad2deg(numpy.arctan(P_dot_y/P_dot_x))
+print("The inject angle is", theta, "degrees")
 
 
 

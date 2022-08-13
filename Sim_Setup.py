@@ -14,7 +14,7 @@ def CleanUp():
 
 
 class Simulation():
-    def __init__(self, ox_mass, fuel_mass, burn_time, Pcc, area_ratio=3.887, run_CEA=True, run_OpenRocket=True, efficiency=0.9):
+    def __init__(self, ox_mass, fuel_mass, burn_time, Pcc, area_ratio=4.5, run_CEA=True, run_OpenRocket=True, efficiency=0.9):
         self.ox_mass = ox_mass
         self.fuel_mass = fuel_mass
         self.burn_time = burn_time
@@ -38,10 +38,6 @@ class Simulation():
 
             self.Isp = self.cea.Isp
             self.thrust = (self.ox_rate+self.fuel_rate)*9.81*self.Isp*self.efficiency
-
-            ####Temp
-            self.thrust = 2000
-###
 
             self.engine_file = '''<engine-database>
  <engine-list>
