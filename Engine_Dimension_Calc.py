@@ -20,17 +20,17 @@ class BC:
 
 #### Inputs
 
-Pcc = 400                               # psia
+Pcc = 300                               # psia
 OF = 4
 prop_mass = 9.3                         # kg
 burn_time = 6                           # s
-area_ratio = 4.5
+area_ratio = 3.7
 L_star = 1                              # m
 chamber_diameter = 0.09                 # m
 
 T_inj = 295                             # K
-P_inj = 700                             # psia
-C_d = 1
+P_inj = 750                             # psia
+C_d = 0.7
 Ox_hole_diameter = 2/64.0               # in
 L_over_d = 10
 injector_diameter = 0.030               # m

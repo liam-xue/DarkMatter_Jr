@@ -23,15 +23,22 @@ def effect_of_OF(OF):
 
 def effect_of_Pcc(Pcc):
     Pcc = int(Pcc)
-    sim = Simulation(7, 2.3333, 8.4, Pcc, run_OpenRocket=False)
+
+    area_ratio = 2
+    while Simulation(7.44, 1.86, 6, Pcc, area_ratio, run_OpenRocket=False).cea.P_e > 14:
+        area_ratio += 0.02
+
+    sim = Simulation(7.44, 1.86, 6, Pcc, area_ratio, run_OpenRocket=False)
     #apogee = max(sim.flight_run.kinematics_dynamics.TYPE_ALTITUDE)
-    thrust = sim.thrust
+    Isp = sim.Isp
+
+    print(Pcc,area_ratio, Simulation(7.44, 1.86, 6, Pcc, area_ratio, run_OpenRocket=False).cea.P_e, Isp, sep="\t")
 
     f = open(str(os.path.join('Result', "Pcc.txt")), "a")
     f.write("\n" + format(Pcc,'.4f'))
     f.close()
-    f = open(str(os.path.join('Result', "thrust.txt")), "a")
-    f.write("\n" + format(thrust,'.4f'))
+    f = open(str(os.path.join('Result', "Isp.txt")), "a")
+    f.write("\n" + format(Isp,'.4f'))
     f.close()
 
 
@@ -39,20 +46,20 @@ def effect_of_burntime(burn_time,efficiency=90):
     burn_time = float(burn_time)
     efficiency = int(efficiency)
     OF = 4
-    prop_mass = 9.25
+    prop_mass = 9.3
     ox_mass = prop_mass/(OF+1)*OF
     fuel_mass = prop_mass/OF
 
-    sim = Simulation(ox_mass, fuel_mass, burn_time, 400, 4.5, efficiency=efficiency/100.0)
+    sim = Simulation(ox_mass, fuel_mass, burn_time, 300, 3.6, efficiency=efficiency/100.0)
     thrust = sim.thrust
     apogee = max(sim.flight_run.kinematics_dynamics.TYPE_ALTITUDE)
     mach = max(sim.flight_run.kinematics_dynamics.TYPE_MACH_NUMBER)
 
     print(thrust, apogee, mach)
 
-    #f = open(str(os.path.join('Result', "burn_time.txt")), "a")
-    #f.write("\n" + format(burn_time,'.4f'))
-    #f.close()
+    f = open(str(os.path.join('Result', "burn_time.txt")), "a")
+    f.write("\n" + format(burn_time,'.4f'))
+    f.close()
     f = open(str(os.path.join('Result', "thrust.txt")), "a")
     f.write("\n" + format(thrust,'.4f'))
     f.close()
