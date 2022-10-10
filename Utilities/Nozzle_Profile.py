@@ -287,9 +287,6 @@ def generate_nozzle(area_ratio,ln_frac, gamma, cc_t, cc_p, con_points, div_point
     plt.gca().set_aspect('equal', adjustable = 'box')
     plt.draw()
     
-    if printable:
-        plt.show()
-    
     f2 = plt.figure()
     
     plt.plot(x_list_mod, mach_list, color = 'r')
@@ -299,7 +296,7 @@ def generate_nozzle(area_ratio,ln_frac, gamma, cc_t, cc_p, con_points, div_point
     f3 = plt.figure()
     
     plt.plot(x_list_mod, pressure_list, color = 'g')
-    plt.title("Pressure Variation [Pa]")
+    plt.title("Pressure Variation [kPa]")
     plt.draw()    
     
     f4 = plt.figure()
@@ -308,18 +305,19 @@ def generate_nozzle(area_ratio,ln_frac, gamma, cc_t, cc_p, con_points, div_point
     plt.title("Temperature Variation [K]")
     plt.draw()    
     
-    # plt.show()
+    if printable:
+        plt.show()
     
     #Writing CSV output file
     
     z_list = [0]*len(x_list)
     
-    f = open(os.path.join(os.path.dirname(__file__),'Nozzle_Spline-Rt'+format(R_t, '.2f')+'-Rin'+format(R_in, '.2f')+'-theta'+format(inlet_angle, '.2f')+'-AR'+format(area_ratio, '.2f')+'-lf'+format(ln_frac, '.2f')+'-gamma'+format(gamma, '.2f')+'.txt'), 'w')
+    f = open(os.path.join(os.path.dirname(__file__),'Nozzle_Spline-Rt'+format(R_t, '.2f')+'-Rin'+format(R_in, '.2f')+'-theta'+format(inlet_angle, '.2f')+'-AR'+format(area_ratio, '.2f')+'-LF'+format(ln_frac, '.2f')+'-gamma'+format(gamma, '.2f')+'.txt'), 'w')
     
     writer = csv.writer(f)
     aa = 0
     for items in x_list:
-        # writer.writerow([x_list_mod[aa], y_list[aa], z_list[aa], pressure_list[aa]])
+        #writer.writerow([x_list_mod[aa], y_list[aa], z_list[aa], mach_list[aa], pressure_list[aa], temperature_list[aa]])
         writer.writerow([x_list_mod[aa], y_list[aa], z_list[aa]])
         aa = aa + 1
     
@@ -357,5 +355,5 @@ def get_nozzle(R_t,R_in,theta,area_ratio,ln_frac,gamma,cc_t,cc_p,con_points,div_
 if __name__ == "__main__":
     printable = True
     print("Input radius of throat [mm], radius of inlet [mm], and inlet angle [degrees] using parameter_check_1(R_t, R_in, inlet_angle)")
-    parameter_check_1(16.75/2,0.09*1000/2,40) 
-    generate_nozzle(4.2,1,1.4,3060,2758,500,500)
+    parameter_check_1(19.4,120.65/2-1.6*6,40) 
+    generate_nozzle(3.7,1,1.18,3043,2068.43,500,500)

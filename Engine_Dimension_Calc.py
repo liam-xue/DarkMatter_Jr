@@ -31,8 +31,8 @@ chamber_diameter = 0.09                 # m
 T_inj = 295                             # K
 P_inj = 750                             # psia
 C_d = 0.7
-Ox_hole_diameter = 2/64.0               # in
-L_over_d = 10
+Ox_hole_diameter = 3/64.0               # in
+L_over_d = 8
 injector_diameter = 0.030               # m
 fuel_velocity = 20                      # m/s
 Ox_discharge_angle = numpy.deg2rad(90)  # deg
@@ -57,7 +57,7 @@ V_dot = m_dot/rho
 print("Therefore volumetric flowrate V_dot = m_dot/\\rho =", V_dot, "m3/s")
 A = V_dot/a
 print("throat area, A = V_dot/a =", BC.GREEN, A, "m^2", BC.END)
-throat_diameter = numpy.sqrt(A/numpy.pi)
+throat_diameter = numpy.sqrt(A/numpy.pi)*2
 print("throat diameter, d =", BC.GREEN, throat_diameter, "m", BC.END, "OR", throat_diameter*1000, "mm")
 print("exit diameter =", throat_diameter*1000*numpy.sqrt(area_ratio), "mm")
 
